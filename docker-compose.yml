@@ -1,0 +1,28 @@
+# docker-compose -f docker-compose.yml up -d
+version: '3.2'
+services:
+  nginx:
+    image: fraoustin/fancyindex
+    volumes:
+      - type: bind
+        source: ./nginx-proxy/library.conf
+        target: /etc/nginx/conf.d/library.conf
+        read_only: true
+      - type: bind
+        source: ./nginx-proxy/theme.d
+        target: /etc/nginx/conf.d/theme.d
+        read_only: true
+      - type: bind
+        source: ./nginx-proxy/themes
+        target: /themes
+        read_only: true
+      - type: bind
+        source: /host_mnt/d/Library of Ashurbanipal
+        target: /library
+        read_only: true
+    ports:
+      - "80:80"
+    tty:
+      true
+    restart:
+      always
